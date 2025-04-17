@@ -23,24 +23,28 @@ RUN apt-get update && apt-get install -y \
     libxext6 \
     libssl-dev \
     wkhtmltopdf \
+    poppler-utils \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo zip gd xml bcmath
 
+# Create a dedicated runtime dir for www-data
+RUN mkdir -p /var/www-runtime && chown www-data:www-data /var/www-runtime
+ENV XDG_RUNTIME_DIR=/var/www-runtime
+
+# Ensure permissions on tmp
+RUN chmod 1777 /tmp
+
 # Verify wkhtmltopdf installation
 RUN wkhtmltopdf --version
-
-# Increased memory limit
-RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memlimit.ini
-
-# Set PHP upload limits
-RUN echo "upload_max_filesize=64M" >> /usr/local/etc/php/conf.d/uploads.ini \
-    && echo "post_max_size=64M" >> /usr/local/etc/php/conf.d/uploads.ini
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copy app source
 COPY . .
+
+# Copy php.ini into the container
+COPY ./docker/php/php.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Install Laravel dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
