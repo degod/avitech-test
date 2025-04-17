@@ -15,7 +15,7 @@ attachments).
 Below are the specifications of dependencies:
 
 - Laravel version 12
-- PHP version 8.2 or later
+- PHP version 8.3
 - Laravel Snappy
 - Setasign FPDF
 
