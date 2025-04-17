@@ -42,7 +42,7 @@ Before you start, ensure you have the following installed:
 4. **Start the application with Laravel Sail:**
 
 	```bash
-	docker exec -it avitech-app composer install && cp .env.example .env && php artisan key:generate
+	docker exec -it avitech-app composer install && cp .env.example .env && php artisan key:generate && touch database.sqlite
 	```
 
 5. **Logging in to container shell:**
