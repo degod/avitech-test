@@ -10,7 +10,7 @@ class PdfComposerService
     {
         $pdfPaths = [];
 
-        for ($j = 1; $j <= 12; $j++) {
+        for ($j = 1; $j <= 13; $j++) {
             $emailChain = [];
             $sender = ['name' => 'Avitech Hr', 'email' => 'avitech.hr@gmail.com'];
             $receiver = ['name' => 'Godwin Uche', 'email' => 'godwinseeyou@gmail.com'];
