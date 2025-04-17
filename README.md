@@ -10,6 +10,22 @@ attachments).
 - Generate a PDF file from the entire simulated email chain.
 - The resulting PDF file should be approximately 70MB in size.
 
+## Specifications
+
+Below are the specifications of dependencies:
+
+- Laravel version 12
+- PHP version 8.2 or later
+- Laravel Snappy
+- Setasign FPDF
+
+Before you start, ensure you have the following installed:
+
+- Docker (up-to-date will be just fine)
+- PHP version 8.3 or later
+- Web browser
+- Shell terminal environment
+
 ## Setting up the project locally
 
 Before you start, ensure you have the following installed:
