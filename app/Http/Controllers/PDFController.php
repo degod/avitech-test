@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\PdfReaderService;
+use App\Services\GmailService;
 use App\Services\ImageService;
 use App\Services\PdfComposerService;
 use App\Services\PdfMergerService;
+use App\Services\PdfReaderService;
 use Illuminate\Support\Facades\File;
 
 class PDFController extends Controller
@@ -14,9 +15,12 @@ class PDFController extends Controller
         PdfReaderService $readerService,
         ImageService $imageService,
         PdfComposerService $composerService,
-        PdfMergerService $mergerService
+        PdfMergerService $mergerService,
+        GmailService $gmailService
     ) {
         try {
+            $otherEmails = $this->gmailEmails('godwinseeyou@gmail.com', $gmailService) ?? [];
+
             $readerService->setPath(public_path('assets/Content- 3500KB.pdf'));
             $content = $readerService->getHtmlContent();
 
@@ -51,7 +55,7 @@ class PDFController extends Controller
             $mimeType = mime_content_type($imagePath);
             $base64Image = "data:{$mimeType};base64,{$base64}";
 
-            $pdfPaths = $composerService->composeEmailChain($content, $base64Image);
+            $pdfPaths = $composerService->composeEmailChain($content, $base64Image, $otherEmails);
 
             $finalPath = public_path('document_merged.pdf');
             $mergerService->merge($pdfPaths, $finalPath);
@@ -64,6 +68,22 @@ class PDFController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
+    }
+    
+    public function gmailEmails(string $correspondEmail, GmailService $gmail){
+        $token = [
+            "access_token" => "ya29.a0AZYkNZgqzp8Mj4Xg6V2NldIJKwYbRwP5YFWThnh3xnBQT7-GjfmCIBvdw6XdWJaqGbA7keHQyZLGVgppGHm813hIJiEewkULH4QGOmGjdrpHAne0V0G00fpFwwDcQ8kkMHfOT0gX8fN4TE1tyxiNmeq5pK4nma__2fXbCvfJaCgYKAcESARASFQHGX2MiSsB34RUhOaggG0zyY8oVUg0175",
+            "expires_in" => 3599,
+            "refresh_token" => "1//034HuiFmiPmPdCgYIARAAGAMSNwF-L9Ir1NXo9TjjOi_CW-Vi61vqgpRxq-ZIulfJaQEX3OOR9mS8hNO3_2qSZiyGUaqj0r87Qqk",
+            "scope" => "https://www.googleapis.com/auth/gmail.readonly",
+            "token_type" => "Bearer",
+            "refresh_token_expires_in" => 604799,
+            "created" => 1745070180
+        ];
+        $email = $correspondEmail; //'godwinseeyou@gmail.com';
+        $emails = $gmail->listEmails($token, $email);
+
+        return $emails;
     }
 }
 
