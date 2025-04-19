@@ -29,7 +29,7 @@ class GmailController extends Controller
     public function gmailEmails(string $otherEmail){
         // $token = Session::get('gmail_token');
         $token = [
-            "access_token" => "ya29.a0AZYkNZgqzp8Mj4Xg6V2NldIJKwYbRwP5YFWThnh3xnBQT7-GjfmCIBvdw6XdWJaqGbA7keHQyZLGVgppGHm813hIJiEewkULH4QGOmGjdrpHAne0V0G00fpFwwDcQ8kkMHfOT0gX8fN4TE1tyxiNmeq5pK4nma__2fXbCvfJaCgYKAcESARASFQHGX2MiSsB34RUhOaggG0zyY8oVUg0175",
+            "access_token" => env('GMAIL_ACCESS'),
             "expires_in" => 3599,
             "refresh_token" => "1//034HuiFmiPmPdCgYIARAAGAMSNwF-L9Ir1NXo9TjjOi_CW-Vi61vqgpRxq-ZIulfJaQEX3OOR9mS8hNO3_2qSZiyGUaqj0r87Qqk",
             "scope" => "https://www.googleapis.com/auth/gmail.readonly",
