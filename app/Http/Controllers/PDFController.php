@@ -74,7 +74,7 @@ class PDFController extends Controller
         $token = [
             "access_token" => env('GMAIL_ACCESS'),
             "expires_in" => 3599,
-            "refresh_token" => "1//034HuiFmiPmPdCgYIARAAGAMSNwF-L9Ir1NXo9TjjOi_CW-Vi61vqgpRxq-ZIulfJaQEX3OOR9mS8hNO3_2qSZiyGUaqj0r87Qqk",
+            "refresh_token" => env('GMAIL_REFRESH'),
             "scope" => "https://www.googleapis.com/auth/gmail.readonly",
             "token_type" => "Bearer",
             "refresh_token_expires_in" => 604799,
